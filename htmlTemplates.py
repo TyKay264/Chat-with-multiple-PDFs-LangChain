@@ -28,7 +28,7 @@ css = '''
 bot_template = '''
 <div class="chat-message bot">
     <div class="avatar">
-        <img src="https://i.ibb.co/cN0nmSj/Screenshot-2023-05-28-at-02-37-21.png">
+        <img src="https://ikonick.com/cdn/shop/files/ronaldo-siuu-vertical_copy_canvas_g_-_main_vertical_script_1500x1500_fbc496cd-2d72-4439-a59e-561a4b54918c.jpg?v=1740775438">
     </div>
     <div class="message">{{MSG}}</div>
 </div>
@@ -37,7 +37,7 @@ bot_template = '''
 user_template = '''
 <div class="chat-message user">
     <div class="avatar">
-        <img src="https://i.ibb.co/rdZC7LZ/Photo-logo-1.png">
+        <img src="https://i2-prod.mirror.co.uk/article13260478.ece/ALTERNATES/s1200b/0_La-Liga-Santander-FC-Barcelona-v-Alaves.jpg">
     </div>    
     <div class="message">{{MSG}}</div>
 </div>
