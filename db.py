@@ -1,11 +1,12 @@
 import sqlite3
 from datetime import datetime
 
-DB_PATH = "vector_metadata.db"
+DB_PATH = "PDF.db"
 
 def create_tables():
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
+        
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS documents (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +32,7 @@ def insert_document(file_name):
                        (file_name, datetime.now().isoformat()))
         conn.commit()
         cursor.execute("SELECT id FROM documents WHERE file_name = ?", (file_name,))
-        return cursor.fetchone()[0]
+        return cursor.fetchone()[0] 
 
 def insert_chunks(document_id, chunks):
     with sqlite3.connect(DB_PATH) as conn:
