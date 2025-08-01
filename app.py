@@ -67,11 +67,11 @@ def load_vectorstore():
 
 # ----- Build conversation chain -----
 def get_conversation_chain(vectorstore):
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        temperature=0.5,
-        google_api_key=os.getenv("GEMINI_API_KEY")
-    )
+    # llm = ChatGoogleGenerativeAI(
+    #     model="gemini-2.5-flash",
+    #     temperature=0.5,
+    #     google_api_key=os.getenv("GEMINI_API_KEY")
+    # )
 
     # llm = ChatOpenAI(
     #     model="gpt-3.5-turbo",  # hoặc "gpt-3.5-turbo"
@@ -86,10 +86,10 @@ def get_conversation_chain(vectorstore):
     #     groq_api_key=os.getenv("GROQ_API_KEY")
     # )
 
-    # llm = ChatOllama(
-    #     model="gemma3",
-    #     # temperature=0.5
-    # )
+    llm = ChatOllama(
+        model="gemma3:4b",
+        temperature=0.5
+    )
 
     # llm = ChatOllama(
     #     model="qwen3",
@@ -98,7 +98,7 @@ def get_conversation_chain(vectorstore):
 
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 50})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 20})
 
     custom_prompt = PromptTemplate.from_template("""
     Bạn là trợ lý AI, chỉ trả lời bằng tiếng Việt dựa trên thông tin từ các tài liệu sau:
@@ -118,6 +118,12 @@ def get_conversation_chain(vectorstore):
 
 # ----- Handle user input -----
 def handle_userinput(user_question):
+    retriever = st.session_state.conversation.retriever
+    retrieved_docs = retriever.get_relevant_documents(user_question)
+    context_text = "\n\n---\n\n".join([doc.page_content for doc in retrieved_docs])
+    print("\n======= CONTEXT USED IN PROMPT =======")
+    print(context_text)
+    print("======================================\n")
     response = st.session_state.conversation({'question': user_question})
     st.session_state.chat_history = response['chat_history']
 
